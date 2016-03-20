@@ -62,6 +62,20 @@ app.post('/todos', function(req, res) {
 	res.json(body);
 });
 
+// DELETE /todos/:id
+app.delete('/todos/:id', function(req, res) {
+	var todoId = parseInt(req.params.id, 10);
+	var matchTodo = _.findWhere(todos, {id:todoId});
+
+	// if no id match -> send 404
+	if (matchTodo) {
+		todos = _.without(todos, matchTodo);
+		res.json(matchTodo);
+	} else {
+		res.status(404).send('Error 404!!!');
+	}
+
+});
 
 
 app.listen(PORT, function () {
